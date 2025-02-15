@@ -54,6 +54,7 @@
                   type="text"
                   placeholder="Search customers..."
                   class="search-box"
+                  autocomplete="off"
                 />
               </div>
               <button class="btn-primary" id="add-customer-btn">
@@ -70,7 +71,6 @@
                     <th>RFID Number</th>
                     <th>Customer Name</th>
                     <th>Contact Number</th>
-                    <th>Address</th>
                     <th>Loan Status</th>
                     <th>Actions</th>
                   </tr>
@@ -79,6 +79,15 @@
                   <!-- Table rows will be populated by JavaScript -->
                 </tbody>
               </table>
+              <div class="pagination">
+                <button class="btn-secondary" id="prev-page" disabled>
+                  Previous
+                </button>
+                <span id="page-info">Page 1 of 1</span>
+                <button class="btn-secondary" id="next-page" disabled>
+                  Next
+                </button>
+              </div>
             </div>
           </div>
 
@@ -89,19 +98,15 @@
               <form id="customer-form">
                 <div class="form-group">
                   <label for="rfid">RFID Number</label>
-                  <input type="text" id="rfid" required />
+                  <input type="text" id="rfid" required autocomplete="off" />
                 </div>
                 <div class="form-group">
                   <label for="name">Customer Name</label>
-                  <input type="text" id="name" required />
+                  <input type="text" id="name" required autocomplete="off" />
                 </div>
                 <div class="form-group">
                   <label for="contact">Contact Number</label>
-                  <input type="tel" id="contact" required />
-                </div>
-                <div class="form-group">
-                  <label for="address">Address</label>
-                  <textarea id="address" required></textarea>
+                  <input type="tel" id="contact" required autocomplete="off" />
                 </div>
                 <div class="modal-actions">
                   <button
@@ -131,6 +136,17 @@
               <div class="modal-actions">
                 <button class="btn-secondary" id="cancel-delete">Cancel</button>
                 <button class="btn-danger" id="confirm-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Dialog -->
+          <div class="modal" id="error-dialog">
+            <div class="modal-content">
+              <h2>Error</h2>
+              <p id="error-message"></p>
+              <div class="modal-actions">
+                <button class="btn-primary" id="error-ok">OK</button>
               </div>
             </div>
           </div>

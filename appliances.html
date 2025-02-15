@@ -54,6 +54,7 @@
                   type="text"
                   placeholder="Search appliances..."
                   class="search-box"
+                  autocomplete="off"
                 />
               </div>
               <button class="btn-primary" id="add-appliance-btn">
@@ -68,8 +69,6 @@
                 <thead>
                   <tr>
                     <th>Appliance Name</th>
-                    <th>Brand</th>
-                    <th>Model</th>
                     <th>Price</th>
                     <th>Stock Quantity</th>
                     <th>Actions</th>
@@ -79,6 +78,15 @@
                   <!-- Table rows will be populated by JavaScript -->
                 </tbody>
               </table>
+              <div class="pagination">
+                <button class="btn-secondary" id="prev-page" disabled>
+                  Previous
+                </button>
+                <span id="page-info">Page 1 of 1</span>
+                <button class="btn-secondary" id="next-page" disabled>
+                  Next
+                </button>
+              </div>
             </div>
           </div>
 
@@ -89,15 +97,7 @@
               <form id="appliance-form">
                 <div class="form-group">
                   <label for="name">Appliance Name</label>
-                  <input type="text" id="name" required />
-                </div>
-                <div class="form-group">
-                  <label for="brand">Brand</label>
-                  <input type="text" id="brand" required />
-                </div>
-                <div class="form-group">
-                  <label for="model">Model</label>
-                  <input type="text" id="model" required />
+                  <input type="text" id="name" required autocomplete="off" />
                 </div>
                 <div class="form-group">
                   <label for="price">Price</label>
@@ -107,11 +107,18 @@
                     required
                     min="0"
                     step="0.01"
+                    autocomplete="off"
                   />
                 </div>
                 <div class="form-group">
                   <label for="stock">Stock Quantity</label>
-                  <input type="number" id="stock" required min="0" />
+                  <input
+                    type="number"
+                    id="stock"
+                    required
+                    min="0"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="modal-actions">
                   <button
@@ -141,6 +148,17 @@
               <div class="modal-actions">
                 <button class="btn-secondary" id="cancel-delete">Cancel</button>
                 <button class="btn-danger" id="confirm-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Dialog -->
+          <div class="modal" id="error-dialog">
+            <div class="modal-content">
+              <h2>Error</h2>
+              <p id="error-message"></p>
+              <div class="modal-actions">
+                <button class="btn-primary" id="error-ok">OK</button>
               </div>
             </div>
           </div>

@@ -1,13 +1,4 @@
-/* Customer Status Badges */
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
+/* Customer Status Badge Colors */
 .status-active {
     background-color: #dcfce7;
     color: #166534;
@@ -18,38 +9,26 @@
     color: #3730a3;
 }
 
-/* Action Buttons in Table */
-.action-buttons {
+/* Pagination */
+.pagination {
     display: flex;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
 }
 
-.btn-icon {
-    padding: 0.375rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background-color: var(--background);
+.pagination button {
+    min-width: 100px;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#page-info {
+    font-size: 0.875rem;
     color: var(--muted-foreground);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-icon:hover {
-    background-color: var(--muted);
-    color: var(--foreground);
-}
-
-/* Customer Form Specific */
-#address {
-    min-height: 100px;
-    resize: vertical;
-}
-
-/* Responsive Table */
-@media (max-width: 1024px) {
-    .data-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
 }
