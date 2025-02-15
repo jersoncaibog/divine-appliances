@@ -1,0 +1,93 @@
+/* Stock Status Indicators */
+.stock-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stock-indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+}
+
+.stock-high {
+    background-color: #22c55e;
+}
+
+.stock-medium {
+    background-color: #eab308;
+}
+
+.stock-low {
+    background-color: #ef4444;
+}
+
+/* Price Formatting */
+.price {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* Grid View Toggle */
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.grid-view .appliances-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.appliance-card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.appliance-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.appliance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.appliance-name {
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.appliance-brand {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.appliance-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+/* Responsive Table */
+@media (max-width: 1024px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .grid-view .appliances-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+} 

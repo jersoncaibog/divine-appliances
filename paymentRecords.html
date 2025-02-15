@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divine Appliances - Payment Records</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <link rel="stylesheet" href="assets/css/paymentRecords.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Left Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>Divine Appliances</h2>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html">
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="customers.html">
+              <span>Customers</span>
+            </a>
+          </li>
+          <li>
+            <a href="loans.html">
+              <span>Loans</span>
+            </a>
+          </li>
+          <li>
+            <a href="appliances.html">
+              <span>Appliances</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="paymentRecords.html">
+              <span>Payment Records</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-container">
+          <header>
+            <h1>Payment Records</h1>
+            <div class="header-actions">
+              <div class="search-container">
+                <input
+                  type="text"
+                  placeholder="Search payments..."
+                  class="search-box"
+                />
+              </div>
+              <button class="btn-primary" id="record-payment-btn">
+                Record Payment
+              </button>
+            </div>
+          </header>
+
+          <div class="payment-records-content">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Loan Reference</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Date</th>
+                    <th>Remaining Balance</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="payments-table-body">
+                  <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Record Payment Modal -->
+          <div class="modal" id="payment-modal">
+            <div class="modal-content">
+              <h2>Record Payment</h2>
+              <form id="payment-form">
+                <div class="form-group">
+                  <label for="loan">Select Loan</label>
+                  <select id="loan" required>
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="amount">Amount Paid</label>
+                  <input
+                    type="number"
+                    id="amount"
+                    required
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="payment-date">Payment Date</label>
+                  <input type="date" id="payment-date" required />
+                </div>
+                <div class="modal-actions">
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="cancel-payment"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn-primary">
+                    Save Payment
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Payment History Modal -->
+          <div class="modal" id="history-modal">
+            <div class="modal-content">
+              <h2>Payment History</h2>
+              <div class="payment-history-list">
+                <!-- Payment history will be populated by JavaScript -->
+              </div>
+              <div class="modal-actions">
+                <button class="btn-secondary" id="close-history">Close</button>
+                <button class="btn-primary" id="print-history">
+                  Print History
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Print Receipt Modal -->
+          <div class="modal" id="receipt-modal">
+            <div class="modal-content">
+              <div class="receipt-content">
+                <!-- Receipt content will be populated by JavaScript -->
+              </div>
+              <div class="modal-actions">
+                <button class="btn-secondary" id="close-receipt">Close</button>
+                <button class="btn-primary" id="print-receipt">
+                  Print Receipt
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/paymentRecords.js"></script>
+  </body>
+</html>

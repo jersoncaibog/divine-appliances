@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divine Appliances - Dashboard</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Left Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>Divine Appliances</h2>
+        </div>
+        <ul class="nav-links">
+          <li class="active">
+            <a href="index.html">
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="customers.html">
+              <span>Customers</span>
+            </a>
+          </li>
+          <li>
+            <a href="loans.html">
+              <span>Loans</span>
+            </a>
+          </li>
+          <li>
+            <a href="appliances.html">
+              <span>Appliances</span>
+            </a>
+          </li>
+          <li>
+            <a href="paymentRecords.html">
+              <span>Payment Records</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-container">
+          <header>
+            <h1>Dashboard</h1>
+            <div class="search-container">
+              <input
+                type="text"
+                placeholder="Search customers, loans, or payments..."
+                class="search-box"
+              />
+            </div>
+          </header>
+
+          <div class="dashboard-content">
+            <!-- Metrics Cards -->
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <h3>Total Active Loans</h3>
+                <div class="metric-value" id="active-loans-count">0</div>
+              </div>
+              <div class="metric-card">
+                <h3>Total Customers</h3>
+                <div class="metric-value" id="total-customers">0</div>
+              </div>
+              <div class="metric-card">
+                <h3>Due/Overdue Payments</h3>
+                <div class="metric-value" id="overdue-payments">0</div>
+              </div>
+              <div class="metric-card">
+                <h3>Today's Collections</h3>
+                <div class="metric-value" id="todays-collections">₱0.00</div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+              <h2>Recent Activity</h2>
+              <div class="activity-list" id="activity-list">
+                <!-- Activity items will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+  </body>
+</html>

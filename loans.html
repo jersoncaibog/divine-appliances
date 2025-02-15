@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divine Appliances - Loans</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <link rel="stylesheet" href="assets/css/loans.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Left Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>Divine Appliances</h2>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html">
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="customers.html">
+              <span>Customers</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="loans.html">
+              <span>Loans</span>
+            </a>
+          </li>
+          <li>
+            <a href="appliances.html">
+              <span>Appliances</span>
+            </a>
+          </li>
+          <li>
+            <a href="paymentRecords.html">
+              <span>Payment Records</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-container">
+          <header>
+            <h1>Loans</h1>
+            <div class="header-actions">
+              <div class="search-container">
+                <input
+                  type="text"
+                  placeholder="Search loans..."
+                  class="search-box"
+                />
+              </div>
+              <button class="btn-primary" id="create-loan-btn">
+                Create New Loan
+              </button>
+            </div>
+          </header>
+
+          <div class="loans-content">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Appliance</th>
+                    <th>Total Loan Amount</th>
+                    <th>Monthly Payment</th>
+                    <th>Payment Status</th>
+                    <th>Balance</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="loans-table-body">
+                  <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Create/Edit Loan Modal -->
+          <div class="modal" id="loan-modal">
+            <div class="modal-content">
+              <h2 id="modal-title">Create New Loan</h2>
+              <form id="loan-form">
+                <div class="form-group">
+                  <label for="customer">Customer</label>
+                  <select id="customer" required>
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="appliance">Appliance</label>
+                  <select id="appliance" required>
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="loan-amount">Total Loan Amount</label>
+                  <input
+                    type="number"
+                    id="loan-amount"
+                    required
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="monthly-payment">Monthly Payment</label>
+                  <input
+                    type="number"
+                    id="monthly-payment"
+                    required
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
+                <div class="modal-actions">
+                  <button type="button" class="btn-secondary" id="cancel-loan">
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn-primary">Save Loan</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Delete Confirmation Dialog -->
+          <div class="modal" id="delete-confirmation">
+            <div class="modal-content">
+              <h2>Delete Loan</h2>
+              <p>
+                Are you sure you want to delete this loan? This action cannot be
+                undone and is only allowed for fully paid loans.
+              </p>
+              <div class="modal-actions">
+                <button class="btn-secondary" id="cancel-delete">Cancel</button>
+                <button class="btn-danger" id="confirm-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/loans.js"></script>
+  </body>
+</html>

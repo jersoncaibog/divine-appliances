@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Divine Appliances - Customers</title>
+    <link rel="stylesheet" href="assets/css/globals.css" />
+    <link rel="stylesheet" href="assets/css/customers.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Left Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>Divine Appliances</h2>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html">
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="customers.html">
+              <span>Customers</span>
+            </a>
+          </li>
+          <li>
+            <a href="loans.html">
+              <span>Loans</span>
+            </a>
+          </li>
+          <li>
+            <a href="appliances.html">
+              <span>Appliances</span>
+            </a>
+          </li>
+          <li>
+            <a href="paymentRecords.html">
+              <span>Payment Records</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-container">
+          <header>
+            <h1>Customers</h1>
+            <div class="header-actions">
+              <div class="search-container">
+                <input
+                  type="text"
+                  placeholder="Search customers..."
+                  class="search-box"
+                />
+              </div>
+              <button class="btn-primary" id="add-customer-btn">
+                Add New Customer
+              </button>
+            </div>
+          </header>
+
+          <div class="customers-content">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>RFID Number</th>
+                    <th>Customer Name</th>
+                    <th>Contact Number</th>
+                    <th>Address</th>
+                    <th>Loan Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-table-body">
+                  <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Add/Edit Customer Modal -->
+          <div class="modal" id="customer-modal">
+            <div class="modal-content">
+              <h2 id="modal-title">Add New Customer</h2>
+              <form id="customer-form">
+                <div class="form-group">
+                  <label for="rfid">RFID Number</label>
+                  <input type="text" id="rfid" required />
+                </div>
+                <div class="form-group">
+                  <label for="name">Customer Name</label>
+                  <input type="text" id="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="contact">Contact Number</label>
+                  <input type="tel" id="contact" required />
+                </div>
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <textarea id="address" required></textarea>
+                </div>
+                <div class="modal-actions">
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="cancel-customer"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn-primary">
+                    Save Customer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Delete Confirmation Dialog -->
+          <div class="modal" id="delete-confirmation">
+            <div class="modal-content">
+              <h2>Delete Customer</h2>
+              <p>
+                Are you sure you want to delete this customer? This action
+                cannot be undone if the customer has no active loans or unpaid
+                balances.
+              </p>
+              <div class="modal-actions">
+                <button class="btn-secondary" id="cancel-delete">Cancel</button>
+                <button class="btn-danger" id="confirm-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/customers.js"></script>
+  </body>
+</html>

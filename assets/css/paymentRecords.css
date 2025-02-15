@@ -1,0 +1,138 @@
+/* Payment Status and Amount Styling */
+.payment-amount {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+.payment-date {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+/* Receipt Styling */
+.receipt-content {
+    background-color: var(--background);
+    padding: 2rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.receipt-logo {
+    margin-bottom: 1rem;
+}
+
+.receipt-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.receipt-details {
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+    padding: 1rem 0;
+    margin: 1rem 0;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.receipt-label {
+    color: var(--muted-foreground);
+}
+
+.receipt-value {
+    font-weight: 500;
+}
+
+.receipt-total {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: right;
+    margin-top: 1rem;
+}
+
+.receipt-footer {
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    margin-top: 2rem;
+}
+
+/* Payment History List */
+.payment-history-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-details {
+    flex: 1;
+}
+
+.history-date {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.history-amount {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .receipt-content,
+    .receipt-content * {
+        visibility: visible;
+    }
+    
+    .receipt-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .modal-actions {
+        display: none;
+    }
+}
+
+/* Responsive Table */
+@media (max-width: 1024px) {
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .receipt-content {
+        padding: 1rem;
+    }
+}
