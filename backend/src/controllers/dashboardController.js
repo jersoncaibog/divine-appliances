@@ -2,22 +2,28 @@ const db = require('../config/database');
 
 const dashboardController = {
     // Get dashboard metrics
-    getDashboardMetrics: async (req, res) => {
+    getMetrics: async (req, res) => {
         try {
-            // Get total active loans
-            const [activeLoans] = await db.query(
-                'SELECT COUNT(*) as count FROM loans WHERE payment_status != "Paid" AND is_active = true'
-            );
+            // Get active loans count
+            const [activeLoans] = await db.query(`
+                SELECT COUNT(*) as count 
+                FROM loans 
+                WHERE payment_status = 'Unpaid' AND is_active = true
+            `);
 
-            // Get total customers
-            const [totalCustomers] = await db.query(
-                'SELECT COUNT(*) as count FROM customers WHERE is_active = true'
-            );
+            // Get total customers count
+            const [customers] = await db.query(`
+                SELECT COUNT(*) as count 
+                FROM customers 
+                WHERE is_active = true
+            `);
 
-            // Get overdue payments
-            const [overduePayments] = await db.query(
-                'SELECT COUNT(*) as count FROM loans WHERE payment_status = "Overdue" AND is_active = true'
-            );
+            // Get overdue payments count
+            const [overduePayments] = await db.query(`
+                SELECT COUNT(*) as count 
+                FROM loans 
+                WHERE payment_status = 'Overdue' AND is_active = true
+            `);
 
             // Get today's collections
             const [todayCollections] = await db.query(`
@@ -28,7 +34,7 @@ const dashboardController = {
 
             res.json({
                 active_loans: activeLoans[0].count,
-                total_customers: totalCustomers[0].count,
+                total_customers: customers[0].count,
                 overdue_payments: overduePayments[0].count,
                 todays_collections: todayCollections[0].total
             });
@@ -43,12 +49,12 @@ const dashboardController = {
             // Get recent payments
             const [recentPayments] = await db.query(`
                 SELECT 
+                    'payment' as activity_type,
                     p.id,
-                    p.payment_date,
                     p.amount_paid,
+                    p.payment_date,
                     c.name as customer_name,
-                    a.name as appliance_name,
-                    'payment' as activity_type
+                    a.name as appliance_name
                 FROM payments p
                 JOIN loans l ON p.loan_id = l.id
                 JOIN customers c ON l.customer_id = c.id
@@ -60,11 +66,12 @@ const dashboardController = {
             // Get recent loans
             const [recentLoans] = await db.query(`
                 SELECT 
+                    'loan' as activity_type,
                     l.id,
                     l.total_loan_amount,
+                    l.id as loan_date,
                     c.name as customer_name,
-                    a.name as appliance_name,
-                    'loan' as activity_type
+                    a.name as appliance_name
                 FROM loans l
                 JOIN customers c ON l.customer_id = c.id
                 JOIN appliances a ON l.appliance_id = a.id
@@ -75,7 +82,11 @@ const dashboardController = {
 
             // Combine and sort activities
             const activities = [...recentPayments, ...recentLoans]
-                .sort((a, b) => new Date(b.payment_date || b.id) - new Date(a.payment_date || a.id))
+                .sort((a, b) => {
+                    const dateA = a.activity_type === 'payment' ? a.payment_date : new Date();
+                    const dateB = b.activity_type === 'payment' ? b.payment_date : new Date();
+                    return new Date(dateB) - new Date(dateA);
+                })
                 .slice(0, 5);
 
             res.json(activities);

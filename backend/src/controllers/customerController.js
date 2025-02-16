@@ -139,6 +139,37 @@ const customerController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
+    },
+
+    // Get customer by RFID
+    getCustomerByRFID: async (req, res) => {
+        try {
+            const { rfid } = req.params;
+            
+            const [customer] = await db.query(
+                'SELECT * FROM customers WHERE rfid_number = ? AND is_active = true',
+                [rfid]
+            );
+            
+            if (customer.length === 0) {
+                return res.status(404).json({ message: 'Customer not found' });
+            }
+            
+            // Get active loans for the customer
+            const [loans] = await db.query(`
+                SELECT l.*, a.name as appliance_name, l.monthly_payment 
+                FROM loans l 
+                JOIN appliances a ON l.appliance_id = a.id 
+                WHERE l.customer_id = ? AND l.is_active = true AND l.payment_status != 'Paid'
+            `, [customer[0].id]);
+            
+            res.json({
+                customer: customer[0],
+                loans: loans
+            });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
     }
 };
 

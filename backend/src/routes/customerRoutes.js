@@ -8,6 +8,9 @@ router.get('/', customerController.getAllCustomers);
 // Search customers
 router.get('/search', customerController.searchCustomers);
 
+// Get customer by RFID
+router.get('/rfid/:rfid', customerController.getCustomerByRFID);
+
 // Get single customer
 router.get('/:id', customerController.getCustomerById);
 

@@ -1,9 +1,20 @@
 const db = require('../config/database');
 
 const paymentController = {
-    // Get all payments
+    // Get all payments with pagination
     getAllPayments: async (req, res) => {
         try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const offset = (page - 1) * limit;
+
+            // Get total count
+            const [countResult] = await db.query(
+                'SELECT COUNT(*) as total FROM payments'
+            );
+            const total = countResult[0].total;
+
+            // Get paginated payments
             const [payments] = await db.query(`
                 SELECT p.*, l.customer_id, c.name as customer_name, l.appliance_id, a.name as appliance_name
                 FROM payments p
@@ -11,8 +22,17 @@ const paymentController = {
                 JOIN customers c ON l.customer_id = c.id
                 JOIN appliances a ON l.appliance_id = a.id
                 ORDER BY p.payment_date DESC
-            `);
-            res.json(payments);
+                LIMIT ? OFFSET ?
+            `, [limit, offset]);
+
+            res.json({
+                payments,
+                pagination: {
+                    total,
+                    page,
+                    totalPages: Math.ceil(total / limit)
+                }
+            });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -135,19 +155,71 @@ const paymentController = {
     // Search payments
     searchPayments: async (req, res) => {
         try {
-            const { query } = req.query;
-            const searchQuery = `%${query}%`;
+            const searchQuery = req.query.query;
             
             const [payments] = await db.query(`
-                SELECT p.*, l.customer_id, c.name as customer_name
+                SELECT p.*, l.customer_id, c.name as customer_name, l.appliance_id, a.name as appliance_name
                 FROM payments p
                 JOIN loans l ON p.loan_id = l.id
                 JOIN customers c ON l.customer_id = c.id
-                WHERE c.name LIKE ?
+                JOIN appliances a ON l.appliance_id = a.id
+                WHERE 
+                    c.name LIKE ? OR
+                    c.rfid_number LIKE ? OR
+                    a.name LIKE ? OR
+                    DATE_FORMAT(p.payment_date, '%Y-%m-%d') LIKE ?
                 ORDER BY p.payment_date DESC
-            `, [searchQuery]);
-            
+            `, [`%${searchQuery}%`, searchQuery, `%${searchQuery}%`, `%${searchQuery}%`]);
+
             res.json(payments);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // Delete payment
+    deletePayment: async (req, res) => {
+        try {
+            // First get the payment details to update the loan balance
+            const [payment] = await db.query(
+                'SELECT * FROM payments WHERE id = ?',
+                [req.params.id]
+            );
+            
+            if (payment.length === 0) {
+                return res.status(404).json({ message: 'Payment not found' });
+            }
+
+            // Get the loan details
+            const [loan] = await db.query(
+                'SELECT * FROM loans WHERE id = ?',
+                [payment[0].loan_id]
+            );
+
+            if (loan.length === 0) {
+                return res.status(404).json({ message: 'Associated loan not found' });
+            }
+
+            // Calculate new balance by adding back the payment amount
+            const newBalance = parseFloat(loan[0].balance) + parseFloat(payment[0].amount_paid);
+            
+            // Update loan balance
+            await db.query(
+                'UPDATE loans SET balance = ?, payment_status = ? WHERE id = ?',
+                [newBalance, newBalance > 0 ? 'Unpaid' : 'Paid', payment[0].loan_id]
+            );
+
+            // Delete the payment record
+            const [result] = await db.query(
+                'DELETE FROM payments WHERE id = ?',
+                [req.params.id]
+            );
+            
+            if (result.affectedRows === 0) {
+                throw new Error('Failed to delete payment');
+            }
+            
+            res.json({ message: 'Payment deleted successfully' });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }

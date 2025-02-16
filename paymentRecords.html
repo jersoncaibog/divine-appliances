@@ -52,7 +52,7 @@
               <div class="search-container">
                 <input
                   type="text"
-                  placeholder="Search payments..."
+                  placeholder="Search by customer name, RFID number, appliance, or date..."
                   class="search-box"
                 />
               </div>
@@ -79,6 +79,15 @@
                   <!-- Table rows will be populated by JavaScript -->
                 </tbody>
               </table>
+              <div class="pagination">
+                <button class="btn-secondary" id="prev-page" disabled>
+                  Previous
+                </button>
+                <span id="page-info">Page 1 of 1</span>
+                <button class="btn-secondary" id="next-page" disabled>
+                  Next
+                </button>
+              </div>
             </div>
           </div>
 
@@ -88,24 +97,37 @@
               <h2>Record Payment</h2>
               <form id="payment-form">
                 <div class="form-group">
-                  <label for="loan">Select Loan</label>
-                  <select id="loan" required>
-                    <!-- Options will be populated by JavaScript -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="amount">Amount Paid</label>
+                  <label for="rfid">Scan RFID Card</label>
                   <input
-                    type="number"
-                    id="amount"
-                    required
-                    min="0"
-                    step="0.01"
+                    type="text"
+                    id="rfid"
+                    placeholder="Scan RFID card..."
+                    autocomplete="off"
                   />
                 </div>
-                <div class="form-group">
-                  <label for="payment-date">Payment Date</label>
-                  <input type="date" id="payment-date" required />
+                <div
+                  id="customer-info"
+                  class="customer-info"
+                  style="display: none"
+                >
+                  <div class="info-header">Customer Information</div>
+                  <div id="customer-details"></div>
+                </div>
+                <div id="payment-fields" style="display: none">
+                  <div class="form-group">
+                    <label for="loan">Select Loan</label>
+                    <select id="loan">
+                      <!-- Options will be populated by JavaScript -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="amount">Amount Paid</label>
+                    <input type="number" id="amount" min="0" step="0.01" />
+                  </div>
+                  <div class="form-group">
+                    <label for="payment-date">Payment Date</label>
+                    <input type="date" id="payment-date" />
+                  </div>
                 </div>
                 <div class="modal-actions">
                   <button
@@ -115,7 +137,12 @@
                   >
                     Cancel
                   </button>
-                  <button type="submit" class="btn-primary">
+                  <button
+                    type="submit"
+                    class="btn-primary"
+                    id="save-payment"
+                    style="display: none"
+                  >
                     Save Payment
                   </button>
                 </div>
@@ -150,6 +177,43 @@
                 <button class="btn-primary" id="print-receipt">
                   Print Receipt
                 </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Dialog -->
+          <div class="modal" id="error-dialog">
+            <div class="modal-content">
+              <h2>Error</h2>
+              <p id="error-message"></p>
+              <div class="modal-actions">
+                <button class="btn-primary" id="error-ok">OK</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success Dialog -->
+          <div class="modal" id="success-dialog">
+            <div class="modal-content">
+              <h2>Success</h2>
+              <p id="success-message"></p>
+              <div class="modal-actions">
+                <button class="btn-primary" id="success-ok">OK</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Confirmation Dialog -->
+          <div class="modal" id="delete-confirmation">
+            <div class="modal-content">
+              <h2>Delete Payment Record</h2>
+              <p>
+                Are you sure you want to delete this payment record? This action
+                cannot be undone.
+              </p>
+              <div class="modal-actions">
+                <button class="btn-secondary" id="cancel-delete">Cancel</button>
+                <button class="btn-danger" id="confirm-delete">Delete</button>
               </div>
             </div>
           </div>

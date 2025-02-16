@@ -1,17 +1,38 @@
 const db = require('../config/database');
 
 const loanController = {
-    // Get all loans
+    // Get all loans with pagination
     getAllLoans: async (req, res) => {
         try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const offset = (page - 1) * limit;
+
+            // Get total count
+            const [countResult] = await db.query(
+                'SELECT COUNT(*) as total FROM loans WHERE is_active = true'
+            );
+            const total = countResult[0].total;
+
+            // Get paginated loans with customer and appliance details
             const [loans] = await db.query(`
                 SELECT l.*, c.name as customer_name, a.name as appliance_name 
                 FROM loans l 
                 JOIN customers c ON l.customer_id = c.id 
                 JOIN appliances a ON l.appliance_id = a.id 
                 WHERE l.is_active = true
-            `);
-            res.json(loans);
+                ORDER BY l.id DESC
+                LIMIT ? OFFSET ?
+            `, [limit, offset]);
+
+            res.json({
+                loans,
+                pagination: {
+                    total,
+                    page,
+                    totalPages: Math.ceil(total / limit)
+                }
+            });
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -131,7 +152,7 @@ const loanController = {
     // Delete loan (soft delete)
     deleteLoan: async (req, res) => {
         try {
-            // Check if loan is fully paid
+            // Check if loan exists and get appliance_id
             const [loan] = await db.query(
                 'SELECT * FROM loans WHERE id = ? AND is_active = true',
                 [req.params.id]
@@ -141,13 +162,16 @@ const loanController = {
                 return res.status(404).json({ message: 'Loan not found' });
             }
             
-            if (loan[0].payment_status !== 'Paid') {
-                return res.status(400).json({ message: 'Cannot delete unpaid loan' });
-            }
-            
+            // Soft delete the loan
             await db.query(
                 'UPDATE loans SET is_active = false WHERE id = ?',
                 [req.params.id]
+            );
+            
+            // Increase appliance stock by 1
+            await db.query(
+                'UPDATE appliances SET stock_quantity = stock_quantity + 1 WHERE id = ?',
+                [loan[0].appliance_id]
             );
             
             res.json({ message: 'Loan deleted successfully' });

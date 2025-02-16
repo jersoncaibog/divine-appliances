@@ -136,3 +136,94 @@
         padding: 1rem;
     }
 }
+
+/* RFID and Customer Info Styles */
+.customer-info {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.info-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.info-row {
+    display: flex;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.info-label {
+    font-weight: 500;
+    width: 80px;
+    color: #6c757d;
+}
+
+.info-value {
+    flex: 1;
+    color: #212529;
+}
+
+.error-message {
+    color: #dc3545;
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+#rfid {
+    font-size: 1.1em;
+    padding: 10px;
+    border: 2px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+#rfid:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Payment Fields Animation */
+#payment-fields {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-out;
+}
+
+#payment-fields[style*="display: block"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Error Dialog Styles */
+#error-dialog .modal-content {
+    max-width: 400px;
+}
+
+#error-dialog h2 {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+#error-message {
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    color: var(--foreground);
+}
+
+#error-dialog .modal-actions {
+    justify-content: center;
+}
+
+#error-dialog .btn-primary {
+    min-width: 100px;
+}

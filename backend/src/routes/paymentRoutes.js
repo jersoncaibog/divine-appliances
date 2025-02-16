@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const paymentController = require('../controllers/paymentController');
 
+// Search payments
+router.get('/search', paymentController.searchPayments);
+
 // Get all payments
 router.get('/', paymentController.getAllPayments);
 
@@ -17,7 +20,7 @@ router.get('/today', paymentController.getTodayCollections);
 // Record payment
 router.post('/', paymentController.recordPayment);
 
-// Search payments
-router.get('/search', paymentController.searchPayments);
+// Delete payment
+router.delete('/:id', paymentController.deletePayment);
 
 module.exports = router; 
